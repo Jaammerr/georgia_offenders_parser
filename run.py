@@ -13,19 +13,21 @@ async def run() -> None:
         with open('settings.yaml') as f:
             config = yaml.safe_load(f)
 
-        if not config.get("two_captcha_api_key", "") or not config.get("max_iterations", ""):
+        if not config.get("two_captcha_api_key", "") or not config.get("threads", "") or not isinstance(config.get("threads", ""), int):
             logger.error("Please fill settings.yaml file")
             input("Press any key to exit")
             exit(0)
 
     else:
         logger.error("File settings.yaml not found")
+        input("Press any key to exit")
+        exit(0)
 
     await initialize_database()
     await OffendersData().all().delete()
 
-    client = Parser(config)
-    await client.start()
+    tasks = [asyncio.create_task(Parser(config, thread_id + 1).start_with_browser()) for thread_id in range(config.get("threads"))]
+    await asyncio.gather(*tasks, return_exceptions=True)
 
 
 

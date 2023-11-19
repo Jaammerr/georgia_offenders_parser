@@ -1,8 +1,9 @@
 aiofiles~=23.2.1
-httpx~=0.25.1
-pyuseragents~=1.0.5
 beautifulsoup4~=4.12.2
 loguru~=0.7.2
 PyYAML~=6.0.1
 tortoise-orm
 asyncpg
+playwright~=1.39.0
+httpx~=0.25.1
+capsolver~=1.0.7

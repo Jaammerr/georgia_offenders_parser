@@ -50,8 +50,12 @@ class OffendersData(Model):
             residence_verification_date: str = None,
             leveling: str = None,
             images: list = None,
-    ):
+    ) -> bool:
         try:
+
+            if await cls.is_offender_exists(images):
+                return True
+
             await cls.create(
                 first_name=first_name,
                 last_name=last_name,
@@ -75,7 +79,26 @@ class OffendersData(Model):
                 leveling=leveling,
                 images={"images": images},
             )
+
+            logger.success("Added offender to database")
+            return False
+
         except Exception as error:
             logger.error(
                 f"Error while adding offender to database: {error}"
             )
+
+    @classmethod
+    async def is_offender_exists(cls, images: list | None) -> bool:
+        try:
+            if images:
+                offenders = await cls.all().values("images")
+                all_images = [image for item in offenders for image in item.get('images', {}).get('images', [])]
+                for image in images:
+                    if image in all_images:
+                        return True
+
+            return False
+
+        except Exception as error:
+            return False
