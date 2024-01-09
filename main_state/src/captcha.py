@@ -1,10 +1,5 @@
 import asyncio
-import base64
-import os
-from pathlib import Path
-
 import httpx
-import capsolver
 
 from loguru import logger
 

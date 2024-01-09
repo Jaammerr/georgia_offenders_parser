@@ -23,11 +23,7 @@ To get the api key, you need to register on the site `https://2captcha.com`, top
 Then you need to change the api key in the file `settings.yaml` (Path - `source folder`).
 Replace the value of the `two_captcha_api_key` variable with your own.
 
-2. `max_iterations` - The maximum number of iterations to parse criminals. Every iteration have 8-10 pages (80-100 criminals). 
-
-This value is made so that the script can complete its work, since the site does not provide information about the number of pages or criminals. 
-
-To change the value, you need to change the value of the `max_iterations` variable in the file `settings.yaml` (Path - `source folder`).
+2. `threads` - number of browsers that will be launched simultaneously. (Set based on your computer power)
 
 
 ## Installation
